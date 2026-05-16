@@ -130,3 +130,7 @@ That is the key product bet: **install it like LeakCanary, inspect the app like 
 3. Run the `app` configuration.
 
 This shell currently does not expose Java, Gradle, Git, or the Android SDK, so the project was scaffolded and statically checked here but not compiled locally.
+
+## License
+
+InspectKit is available under the Apache License 2.0. See [LICENSE](LICENSE).
