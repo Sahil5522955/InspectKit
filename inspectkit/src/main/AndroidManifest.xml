@@ -1,5 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
+        <!-- Launcher entrypoint. Some launchers/search UIs may not reliably open activity-alias targets. -->
+        <activity
+            android:name="dev.inspectkit.InspectKitLauncherActivity"
+            android:exported="true"
+            android:label="@string/inspectkit_display_activity_label"
+            android:icon="@drawable/inspectkit_launcher_icon"
+            android:taskAffinity="dev.inspectkit.${applicationId}"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.InspectKit">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name="dev.inspectkit.InspectKitActivity"
             android:exported="true"
@@ -7,19 +22,5 @@
             android:taskAffinity="dev.inspectkit.${applicationId}"
             android:launchMode="singleTask"
             android:theme="@style/Theme.InspectKit" />
-
-        <!-- LeakCanary-style launcher icon (via activity-alias) -->
-        <activity-alias
-            android:name="dev.inspectkit.InspectKitLauncherActivity"
-            android:enabled="@bool/inspectkit_add_launcher_icon"
-            android:exported="true"
-            android:icon="@drawable/inspectkit_launcher_icon"
-            android:label="@string/inspectkit_display_activity_label"
-            android:targetActivity="dev.inspectkit.InspectKitActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
     </application>
 </manifest>

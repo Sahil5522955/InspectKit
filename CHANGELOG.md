@@ -12,6 +12,10 @@
 
 - Fixed launcher alias manifest attributes (removed unsupported attributes from `<activity-alias>`) and set `InspectKitActivity` to `singleTask` to reduce cases where launchers resume the host app instead.
 
+## 0.1.9 - 2026-05-19
+
+- Replaced the activity-alias launcher with a dedicated `InspectKitLauncherActivity` that redirects to `InspectKitActivity` using `MULTIPLE_TASK`, improving reliability across launchers and launcher search UIs.
+
 ## 0.1.5 - 2026-05-19
 
 - Version bump only (0.1.5).
