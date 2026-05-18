@@ -35,6 +35,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,11 +46,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import java.nio.charset.StandardCharsets
 
 enum class InspectorTab {
     Network,
@@ -201,6 +206,15 @@ private fun NetworkEventCard(event: NetworkEvent) {
                 Text(if (expanded) "Hide payload" else "View payload")
             }
             if (expanded) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(
+                        onClick = { clipboard.setText(AnnotatedString(event.asCurlCommand())) },
+                        colors = ButtonDefaults.buttonColors(containerColor = InspectColors.Canvas, contentColor = InspectColors.Navy),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Copy cURL")
+                    }
+                }
                 PayloadBlock("Request headers", event.requestHeaders.prettyMap())
                 PayloadBlock("Request body", event.requestBody.orEmpty().ifBlank { "(empty)" })
                 PayloadBlock("Response headers", event.responseHeaders.prettyMap())
@@ -260,6 +274,20 @@ private fun DatabaseTab() {
 @Composable
 private fun QueryResultTable(result: QueryResult) {
     val clipboard = LocalClipboardManager.current
+    val context = LocalContext.current
+    var pendingXml by remember { mutableStateOf<String?>(null) }
+    val exportXmlLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/xml")
+    ) { uri ->
+        val xml = pendingXml
+        pendingXml = null
+        if (uri != null && xml != null) {
+            context.contentResolver.openOutputStream(uri)?.use { out ->
+                out.write(xml.toByteArray(StandardCharsets.UTF_8))
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -269,6 +297,17 @@ private fun QueryResultTable(result: QueryResult) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Rows: ${result.rows.size}", color = InspectColors.Ink, modifier = Modifier.weight(1f))
+            Button(
+                onClick = {
+                    pendingXml = result.asXml()
+                    exportXmlLauncher.launch("inspectkit-db.xml")
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = InspectColors.Canvas, contentColor = InspectColors.Navy),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("Export XML")
+            }
+            Spacer(Modifier.width(8.dp))
             IconButton(onClick = { clipboard.setText(AnnotatedString(result.asCsv())) }) {
                 Icon(Icons.Outlined.ContentCopy, contentDescription = "Copy rows", tint = InspectColors.Navy)
             }
@@ -418,4 +457,54 @@ private fun QueryResult.asCsv(): String {
         appendLine(columns.joinToString(","))
         rows.forEach { appendLine(it.joinToString(",")) }
     }
+}
+
+private fun QueryResult.asXml(): String {
+    return buildString {
+        appendLine("""<?xml version="1.0" encoding="utf-8"?>""")
+        appendLine("<result>")
+        appendLine("  <columns>")
+        columns.forEach { appendLine("    <column>${it.escapeXml()}</column>") }
+        appendLine("  </columns>")
+        appendLine("  <rows>")
+        rows.forEach { row ->
+            appendLine("    <row>")
+            row.forEachIndexed { index, value ->
+                val col = columns.getOrNull(index) ?: "col$index"
+                appendLine("""      <cell column="${col.escapeXml()}">${value.escapeXml()}</cell>""")
+            }
+            appendLine("    </row>")
+        }
+        appendLine("  </rows>")
+        appendLine("</result>")
+    }
+}
+
+private fun String.escapeXml(): String {
+    return this
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&apos;")
+}
+
+private fun NetworkEvent.asCurlCommand(): String {
+    val parts = mutableListOf("curl", "-X", method)
+    requestHeaders.forEach { (k, v) ->
+        parts.add("-H")
+        parts.add("$k: $v".shellQuote())
+    }
+    val body = requestBody
+    if (!body.isNullOrBlank()) {
+        parts.add("--data-raw")
+        parts.add(body.shellQuote())
+    }
+    parts.add(url.shellQuote())
+    return parts.joinToString(" ")
+}
+
+private fun String.shellQuote(): String {
+    // POSIX-friendly single quote escaping for sharing in terminals.
+    return "'" + this.replace("'", "'\"'\"'") + "'"
 }
