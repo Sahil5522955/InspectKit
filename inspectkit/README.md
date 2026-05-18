@@ -20,9 +20,7 @@ repositories {
 }
 
 dependencies {
-    debugImplementation("dev.inspectkit:inspectkit:0.1.2")
-    // Optional: LeakCanary-style separate launcher icon for InspectKit panel
-    debugImplementation("dev.inspectkit:inspectkit-debug:0.1.2")
+    debugImplementation("dev.inspectkit:inspectkit:0.1.3")
 }
 ```
 

@@ -14,6 +14,16 @@ android {
     defaultConfig {
         minSdk = 24
         consumerProguardFiles("consumer-rules.pro")
+        manifestPlaceholders["inspectkitLauncherEnabled"] = "false"
+    }
+
+    buildTypes {
+        debug {
+            manifestPlaceholders["inspectkitLauncherEnabled"] = "true"
+        }
+        release {
+            manifestPlaceholders["inspectkitLauncherEnabled"] = "false"
+        }
     }
 
     buildFeatures {
@@ -32,9 +42,6 @@ android {
         singleVariant("release") {
             withSourcesJar()
         }
-        singleVariant("debug") {
-            withSourcesJar()
-        }
     }
 }
 
@@ -50,19 +57,6 @@ afterEvaluate {
                 pom {
                     name.set("InspectKit")
                     description.set("Drop-in in-app inspection tools for Android debug builds.")
-                }
-            }
-
-            // Publishes a debug AAR that includes src/debug sources (including the launcher manifest).
-            create<MavenPublication>("debug") {
-                from(components["debug"])
-                groupId = project.group.toString()
-                artifactId = "inspectkit-debug"
-                version = project.version.toString()
-
-                pom {
-                    name.set("InspectKit (Debug)")
-                    description.set("Debug variant of InspectKit including debug-only components like the launcher activity.")
                 }
             }
         }

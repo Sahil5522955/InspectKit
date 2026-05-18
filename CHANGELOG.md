@@ -1,8 +1,12 @@
 # Changelog
 
+## 0.1.3 - 2026-05-19
+
+- Fixed launcher icon distribution: the InspectKit launcher activity now ships in the main artifact and is enabled only for debug builds.
+
 ## 0.1.2 - 2026-05-19
 
-- Published `dev.inspectkit:inspectkit-debug` which includes the debug launcher activity, so the InspectKit icon appears in app launchers when used as a dependency.
+- Published `dev.inspectkit:inspectkit-debug` which includes the debug launcher activity, so the InspectKit icon appears in app launchers when used as a dependency. (Deprecated by 0.1.3)
 
 ## 0.1.1 - 2026-05-19
 
