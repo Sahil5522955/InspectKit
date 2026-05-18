@@ -43,7 +43,7 @@ In your app module:
 
 ```kotlin
 dependencies {
-    debugImplementation("dev.inspectkit:inspectkit:0.1.0")
+    debugImplementation("dev.inspectkit:inspectkit:0.1.1")
 }
 ```
 
@@ -62,7 +62,7 @@ includeBuild("../InspectKit") {
 Then depend on it the same way:
 
 ```kotlin
-debugImplementation("dev.inspectkit:inspectkit:0.1.0")
+debugImplementation("dev.inspectkit:inspectkit:0.1.1")
 ```
 
 ### Option C: Temporary Direct Module Include

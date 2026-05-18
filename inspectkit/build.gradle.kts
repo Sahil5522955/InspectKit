@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.inspectkit"
-version = "0.1.0"
+version = "0.1.1"
 
 android {
     namespace = "dev.inspectkit"
@@ -42,7 +42,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "dev.inspectkit"
                 artifactId = "inspectkit"
-                version = "0.1.0"
+                version = "0.1.1"
 
                 pom {
                     name.set("InspectKit")

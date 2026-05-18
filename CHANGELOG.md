@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 - 2026-05-19
+
+- Added debug-only InspectKit launcher activity (LeakCanary-style) for opening `InspectKitPanel`.
+- Added "Copy cURL" export for captured network events.
+- Added database result XML export via the system document picker.
+
 ## 0.1.0 - 2026-05-16
 
 Initial public release of InspectKit.

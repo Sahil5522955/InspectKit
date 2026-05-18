@@ -34,7 +34,7 @@ includeBuild("../InspectKit") {
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    debugImplementation("dev.inspectkit:inspectkit:0.1.0")
+    debugImplementation("dev.inspectkit:inspectkit:0.1.1")
 }
 ```
 
@@ -69,8 +69,8 @@ if (BuildConfig.DEBUG) {
 Do not reference InspectKit from release-only code unless you also provide a no-op release artifact with the same API. The clean production setup is:
 
 ```kotlin
-debugImplementation("dev.inspectkit:inspectkit:0.1.0")
-releaseImplementation("dev.inspectkit:inspectkit-noop:0.1.0")
+debugImplementation("dev.inspectkit:inspectkit:0.1.1")
+releaseImplementation("dev.inspectkit:inspectkit-noop:0.1.1")
 ```
 
 The no-op artifact is a future module to add once the public API stabilizes.
