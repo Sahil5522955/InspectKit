@@ -1,0 +1,3 @@
+<resources>
+    <bool name="inspectkit_add_launcher_icon">true</bool>
+</resources>

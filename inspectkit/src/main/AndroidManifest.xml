@@ -1,16 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <!-- LeakCanary-style launcher icon (via a second launcher activity). -->
         <activity
             android:name="dev.inspectkit.InspectKitActivity"
-            android:enabled="true"
             android:exported="true"
-            android:label="InspectKit"
-            android:launchMode="singleTask">
+            android:label="@string/inspectkit_display_activity_label"
+            android:taskAffinity="dev.inspectkit.${applicationId}"
+            android:theme="@style/Theme.InspectKit" />
+
+        <!-- LeakCanary-style launcher icon (via activity-alias) -->
+        <activity-alias
+            android:name="dev.inspectkit.InspectKitLauncherActivity"
+            android:enabled="@bool/inspectkit_add_launcher_icon"
+            android:exported="true"
+            android:icon="@drawable/inspectkit_launcher_icon"
+            android:label="@string/inspectkit_display_activity_label"
+            android:targetActivity="dev.inspectkit.InspectKitActivity"
+            android:taskAffinity="dev.inspectkit.${applicationId}"
+            android:theme="@style/Theme.InspectKit">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
     </application>
 </manifest>

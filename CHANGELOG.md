@@ -4,6 +4,10 @@
 
 - Fixed InspectKit launcher icon not appearing when consumed as a published AAR (launcher activity is now always enabled when the library is present).
 
+## 0.1.7 - 2026-05-19
+
+- Fixed launcher behavior: InspectKit launcher now uses an `activity-alias` with a separate task affinity, so tapping the InspectKit icon opens the InspectKit UI instead of resuming the host app task.
+
 ## 0.1.5 - 2026-05-19
 
 - Version bump only (0.1.5).
