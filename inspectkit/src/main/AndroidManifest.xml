@@ -1,12 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <!--
-          LeakCanary-style launcher icon:
-          Enabled in debug builds via manifestPlaceholders, disabled in release.
-        -->
+        <!-- LeakCanary-style launcher icon (via a second launcher activity). -->
         <activity
             android:name="dev.inspectkit.InspectKitActivity"
-            android:enabled="${inspectkitLauncherEnabled}"
+            android:enabled="true"
             android:exported="true"
             android:label="InspectKit"
             android:launchMode="singleTask">

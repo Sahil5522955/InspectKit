@@ -14,16 +14,6 @@ android {
     defaultConfig {
         minSdk = 24
         consumerProguardFiles("consumer-rules.pro")
-        manifestPlaceholders["inspectkitLauncherEnabled"] = "false"
-    }
-
-    buildTypes {
-        debug {
-            manifestPlaceholders["inspectkitLauncherEnabled"] = "true"
-        }
-        release {
-            manifestPlaceholders["inspectkitLauncherEnabled"] = "false"
-        }
     }
 
     buildFeatures {

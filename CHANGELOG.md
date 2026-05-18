@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6 - 2026-05-19
+
+- Fixed InspectKit launcher icon not appearing when consumed as a published AAR (launcher activity is now always enabled when the library is present).
+
 ## 0.1.5 - 2026-05-19
 
 - Version bump only (0.1.5).
