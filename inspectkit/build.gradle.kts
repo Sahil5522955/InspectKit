@@ -4,8 +4,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "dev.inspectkit"
-version = "0.1.1"
+group = (findProperty("GROUP") as String?) ?: "dev.inspectkit"
+version = (findProperty("VERSION_NAME") as String?) ?: "0.0.0"
 
 android {
     namespace = "dev.inspectkit"
@@ -40,9 +40,9 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "dev.inspectkit"
+                groupId = project.group.toString()
                 artifactId = "inspectkit"
-                version = "0.1.1"
+                version = project.version.toString()
 
                 pom {
                     name.set("InspectKit")
