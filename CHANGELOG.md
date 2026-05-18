@@ -8,6 +8,10 @@
 
 - Fixed launcher behavior: InspectKit launcher now uses an `activity-alias` with a separate task affinity, so tapping the InspectKit icon opens the InspectKit UI instead of resuming the host app task.
 
+## 0.1.8 - 2026-05-19
+
+- Fixed launcher alias manifest attributes (removed unsupported attributes from `<activity-alias>`) and set `InspectKitActivity` to `singleTask` to reduce cases where launchers resume the host app instead.
+
 ## 0.1.5 - 2026-05-19
 
 - Version bump only (0.1.5).
