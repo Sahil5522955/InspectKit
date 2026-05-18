@@ -43,7 +43,9 @@ In your app module:
 
 ```kotlin
 dependencies {
-    debugImplementation("dev.inspectkit:inspectkit:0.1.1")
+    debugImplementation("dev.inspectkit:inspectkit:0.1.2")
+    // Optional: LeakCanary-style separate launcher icon for InspectKit panel
+    debugImplementation("dev.inspectkit:inspectkit-debug:0.1.2")
 }
 ```
 
@@ -62,7 +64,7 @@ includeBuild("../InspectKit") {
 Then depend on it the same way:
 
 ```kotlin
-debugImplementation("dev.inspectkit:inspectkit:0.1.1")
+debugImplementation("dev.inspectkit:inspectkit:0.1.2")
 ```
 
 ### Option C: Temporary Direct Module Include

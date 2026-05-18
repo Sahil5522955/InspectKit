@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 - 2026-05-19
+
+- Published `dev.inspectkit:inspectkit-debug` which includes the debug launcher activity, so the InspectKit icon appears in app launchers when used as a dependency.
+
 ## 0.1.1 - 2026-05-19
 
 - Added debug-only InspectKit launcher activity (LeakCanary-style) for opening `InspectKitPanel`.
