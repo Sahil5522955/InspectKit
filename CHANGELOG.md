@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 - 2026-05-19
+
+- Version bump only (0.1.5).
+
 ## 0.1.3 - 2026-05-19
 
 - Fixed launcher icon distribution: the InspectKit launcher activity now ships in the main artifact and is enabled only for debug builds.

@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    debugImplementation("dev.inspectkit:inspectkit:0.1.3")
+    debugImplementation("dev.inspectkit:inspectkit:0.1.5")
 }
 ```
 
